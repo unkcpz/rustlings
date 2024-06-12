@@ -13,14 +13,15 @@
 // - Uppercase the string
 // - Trim the string
 // - Append "bar" to the string a specified amount of times
-// The exact form of this will be:
+// The exact form of this ill be:
 // - The input is going to be a Vector of a 2-length tuple,
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a Vector of strings.
 //
 // No hints this time!
 
-// I AM NOT DONE
+
+use ::std::iter;
 
 pub enum Command {
     Uppercase,
@@ -29,14 +30,27 @@ pub enum Command {
 }
 
 mod my_module {
+    use std::iter;
+
     use super::Command;
 
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input: Vec<(&str, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![];
         for (string, command) in input.iter() {
             // TODO: Complete the function body. You can do it!
+            output.push(match command {
+                Command::Uppercase => string.to_uppercase(),
+                Command::Trim => string.trim().to_string(),
+                Command::Append(n) => {
+                    let mut s = string.to_string();
+                    for _ in 0..*n {
+                        s.push_str("bar");
+                    }
+                    s
+                }
+            });
         }
         output
     }
@@ -44,8 +58,8 @@ mod my_module {
 
 #[cfg(test)]
 mod tests {
-    // TODO: What do we need to import to have `transformer` in scope?
-    use ???;
+    // TODO: What do e need to import to have `transformer` in scope?
+    use super::my_module::transformer;
     use super::Command;
 
     #[test]
